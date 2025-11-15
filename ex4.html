@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background:  lightblue ;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .dashboard{
+            max-width: 1400px;
+            display: grid;
+            grid-template-columns: 250px, 1fr;
+            grid-template-rows: auto, 1fr;
+            gap: 20px;
+            min-height: calc(100vh-40px);
+        }
+        
+        .header{
+            background:rgb(249, 249, 249);
+            display: flex;
+            grid-column: 1/-1;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 15px;
+            padding: 20px 30px;
+            
+        }
+
+        .header h1{
+            color: rgb(9, 137, 131);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            
+        }
+
+        .search-bar {
+            padding: 10px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            outline: none;
+            width: 250px;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .search-bar:focus {
+            border-color: #6279e0;
+            width: 300px;
+        }
+
+        .user-profile {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: rgb(9, 137, 131);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .user-profile:hover {
+            transform: scale(1.1);
+        }
+
+        .sidebar{
+            background-color:aliceblue;
+            border-radius: 15px;
+            padding:25px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .nav-item{
+            display: flex;
+            padding:15px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-item:hover{
+            background-color: rgb(9, 137, 131);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .nav-item.active{
+            background-color: rgb(9, 137, 131);
+            color: white;
+        }
+
+        .nav-icon{
+            width: 20px;
+            height:20px;
+            display: inline;
+        }
+
+        .main-content{
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            align-content: start;
+        }
+
+        .card{
+            background:rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            transition: tranform 0.3s;
+        }
+
+        .card:hover{
+            transform: translateY(-5px);
+        }
+
+        .card-large{
+            grid-column: span 2;
+        }
+
+        .card-title{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: rgb(103, 103, 103);
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .stat-value{
+            font-size: 36px;
+            font-weight: 700;
+            background:  rgb(9, 137, 131);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 10px 0;
+        }
+
+        .stat-label{
+            color: rgb(113, 113, 113);
+            font-size: 14px;
+        }
+
+        .stat-change{
+            display: inline-block;
+            padding:5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .stat-change.positive{
+            background:rgb(188, 234, 188);
+            color: darkgreen;
+        }
+
+        .stat-change.negative{
+            background: rgb(247, 191, 191);
+        }
+
+        .chart-placeholder{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(122, 122, 248);
+            height: 200px;
+            overflow: hidden;
+            border-radius: 10px;
+            font-weight: 600;
+            background: rgb(241, 194, 241);
+        }
+
+        .chart-bars{
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            width: 100%;
+            height: 100%;
+            padding:20px;
+            gap: 10px;
+        }
+
+        .bar{
+            flex: 1;
+            background:rgb(200, 3, 200);
+            border-radius: 5px 5px 0 0;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .bar:hover{
+            opacity: 1;
+        }
+
+        .activity-list{
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .activity-item{
+            display: flex;
+            align-items: center;
+            gap:15px;
+            padding: 12px;
+            border-radius: 8px;
+            background:rgb(204, 204, 247);
+            transition: backdround 0.3s;
+        }
+
+        .activity-item:hover{
+            background:  rgb(204, 204, 247);
+        }
+
+        .activity-details{
+            flex:1;
+        }
+
+        .activity-title{
+            font-weight: 600;
+            color: rgb(79, 79, 79);
+            font-size: 12px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- header -->
+        <header class="header">
+            <h1>Analytics Dashboard</h1>
+            <div class="header-action">
+                <input type="text" class="search-bar" placeholder="Search..">
+                <div class="user-profile">HS</div>
+            </div>
+        </header>
+
+        <!-- sidebar navigation -->
+        <nav class="sidebar">
+            <div class="nav-item active">
+                <span>Dashboard</span>
+            </div>
+            <div class="nav-item">
+                <span>Analytics</span>
+            </div>
+            <div class="nav-item">
+                <span>Users</span>
+            </div>
+            <div class="nav-item">
+                <span>Settings</span>
+            </div>
+            <div class="nav-item">
+                <span>Reports</span>
+            </div>
+        </nav>
+
+        <!-- main content area -->
+        <main class="main-content">
+            <div class="card">
+                <div class="card-title">Total Revenue</div>
+                <div class="stat-value">$45,231</div>
+                <div class="stat-label">This month</div>
+                <span class="stat-change positive">Up 12.5%</span>
+            </div>
+
+            <!-- Stat Card 2 -->
+            <div class="card">
+                <div class="card-title">Active Users</div>
+                <div class="stat-value">8,234</div>
+                <div class="stat-label">Currently online</div>
+                <span class="stat-change positive">Up 8.2%</span>
+            </div>
+
+            <!-- Stat Card 3 -->
+            <div class="card">
+                <div class="card-title">Conversion Rate</div>
+                <div class="stat-value">3.24%</div>
+                <div class="stat-label">Last 30 days</div>
+                <span class="stat-change negative">Down 2.1%</span>
+            </div>
+
+            <!-- Chart Card (Large) -->
+            <div class="card card-large">
+                <div class="card-title">
+                    <span>Weekly Performance</span>
+                    <span style="font-size: 12px; color: #888;">Last 7 days</span>
+                </div>
+                <div class="chart-placeholder">
+                    <div class="chart-bars">
+                        <div class="bar" style="height: 60%;"></div>
+                        <div class="bar" style="height: 75%;"></div>
+                        <div class="bar" style="height: 45%;"></div>
+                        <div class="bar" style="height: 85%;"></div>
+                        <div class="bar" style="height: 65%;"></div>
+                        <div class="bar" style="height: 90%;"></div>
+                        <div class="bar" style="height: 70%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity Card -->
+            <div class="card">
+                <div class="card-title">Recent Activity</div>
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-details">
+                            <div class="activity-title">New order placed</div>
+                            <div class="activity-time">2 minutes ago</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-details">
+                            <div class="activity-title">New user registered</div>
+                            <div class="activity-time">15 minutes ago</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-details">
+                            <div class="activity-title">Payment received</div>
+                            <div class="activity-time">1 hour ago</div>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-details">
+                            <div class="activity-title">Product shipped</div>
+                            <div class="activity-time">3 hours ago</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
