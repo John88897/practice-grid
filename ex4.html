@@ -113,11 +113,6 @@
             color: white;
         }
 
-        .nav-icon{
-            width: 20px;
-            height:20px;
-            display: inline;
-        }
 
         .main-content{
             display: grid;
@@ -155,10 +150,7 @@
         .stat-value{
             font-size: 36px;
             font-weight: 700;
-            background:  rgb(9, 137, 131);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: rgb(9, 137, 131);;
             margin: 10px 0;
         }
 
@@ -248,6 +240,115 @@
             color: rgb(79, 79, 79);
             font-size: 12px;
         }
+         /* Tablet */
+        @media (max-width: 1024px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto 1fr;
+            }
+
+            .sidebar {
+                flex-direction: row;
+                overflow-x: auto;
+                padding: 15px;
+            }
+
+            .nav-item {
+                white-space: nowrap;
+            }
+
+            .card-large {
+                grid-column: span 1;
+            }
+
+            .search-bar {
+                width: 200px;
+            }
+
+            .search-bar:focus {
+                width: 220px;
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .dashboard {
+                gap: 15px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .search-bar {
+                flex: 1;
+                width: 100%;
+            }
+
+            .search-bar:focus {
+                width: 100%;
+            }
+
+            .sidebar {
+                gap: 5px;
+                padding: 10px;
+            }
+
+            .nav-item {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .stat-value {
+                font-size: 28px;
+            }
+
+            .chart-placeholder {
+                height: 150px;
+            }
+        }
+
+        /* Small Mobile */
+        @media (max-width: 480px) {
+            .sidebar {
+                flex-wrap: nowrap;
+                overflow-x: scroll;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .nav-item span {
+                display: none;
+            }
+
+            .nav-item {
+                padding: 12px;
+                justify-content: center;
+            }
+        }
 
     </style>
 </head>
@@ -287,7 +388,7 @@
                 <div class="card-title">Total Revenue</div>
                 <div class="stat-value">$45,231</div>
                 <div class="stat-label">This month</div>
-                <span class="stat-change positive">Up 12.5%</span>
+                <span class="stat-change positive">Increase 12.5%</span>
             </div>
 
             <!-- Stat Card 2 -->
@@ -295,7 +396,7 @@
                 <div class="card-title">Active Users</div>
                 <div class="stat-value">8,234</div>
                 <div class="stat-label">Currently online</div>
-                <span class="stat-change positive">Up 8.2%</span>
+                <span class="stat-change positive">Increase 8.2%</span>
             </div>
 
             <!-- Stat Card 3 -->
@@ -303,7 +404,7 @@
                 <div class="card-title">Conversion Rate</div>
                 <div class="stat-value">3.24%</div>
                 <div class="stat-label">Last 30 days</div>
-                <span class="stat-change negative">Down 2.1%</span>
+                <span class="stat-change negative">Decrease 2.1%</span>
             </div>
 
             <!-- Chart Card (Large) -->
